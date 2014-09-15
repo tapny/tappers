@@ -80,7 +80,7 @@ $(document).ready( function() {
                         $.each( events, function(index, e) {
                             var option = $("<option>" + e.title + " (" + e.start_date.substr(0,10) + ")</option>");
                             if (e.attended === true) {
-                                option.append(" SHOWED UP");
+                                option.append(" -- SHOWED UP");
                             }
                             select_html.append(option);
                         });
