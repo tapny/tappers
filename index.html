@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+    <p>
+        code: <input class="code" type="text"/>
+        <button class="access">GO</button>
+        <div class="loading"></div>
+    </p>
+    <section class="display">
+    <h3>Event Attendees</h3>
+    <div class="event-attendees">
+        <label>Enter eventbrite id here:</label>
+        <input type="text" name="eb_id">
+        <input type="submit" value="Submit">
+    </div>
+    <h3>Dinner Series</h3>
+    <div class="dinner-series">
+        <label>Enter eventbrite id:</label>
+        <input type="text" name="eb_id">
+        <input type="submit" value="Submit">
+    </div>
+    </section>
+    
+    <br>
+    <hr>
+    <br>
+    <section class="results">
+        <div class="info">
+        </div>
+    <table>
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>events registered</th>
+            <th>past events</th>
+          <tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    </section>
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="Eventbrite.jquery.js"></script>
+<script src="index.js"></script>
+</html>
+
+
