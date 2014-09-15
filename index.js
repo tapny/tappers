@@ -8,7 +8,7 @@ $(document).ready( function() {
     $(".access").click( function() {
         
         var code = $(".code").val();
-        $(".loading").html("please wait... (the first time will take about 8 seconds)");
+        $(".loading").html("please wait... (the first time will take about 10 seconds to load everything)");
 
         localStorage.setItem("code", code);
         
@@ -28,7 +28,7 @@ $(document).ready( function() {
                         $(".display").show(); 
                         $(".loading").html("");
 
-                    }, 8000);
+                    }, 10000);
 
                     // Get all events.
                     eb_client.user_list_events( {"only_display":"id,title,start_date", "asc_or_desc":"asc"}, function( response ) { 
