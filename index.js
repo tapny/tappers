@@ -13,7 +13,11 @@ $(document).ready( function() {
         localStorage.setItem("code", code);
         
         Eventbrite({'access_token': code}, function(eb_client) {
-            // Make map of member email -> array of events
+
+            /**
+             * Make map of member email -> array of events.
+             * Called immediately.
+             * */
             var member_events = {};
             (function make_member_events() {
                 var DEBUG = false;
@@ -61,13 +65,15 @@ $(document).ready( function() {
                     });
                 }
             })();
-
-            $(".event-attendees input[type='submit']").click( function() {
+    
+        
+            // param eid: eventbrite id
+            // param f: filter function
+            var display_event_stats = function(eid, f) {
                 $(".info").html("hold up");
                 // Get list of attendees from eventbrite.
-                var eb_id = $(".event-attendees input[name='eb_id']").val()
                 var result_html = $(".results tbody").html("");
-                eb_client.event_list_attendees ( {'id': eb_id}, function( response ){
+                eb_client.event_list_attendees({'id': eid}, function( response ){
                     var attendees = response.attendees;
                     var newbies = 0;
                     // For each attendee, show facebook picture, how many past total events
@@ -75,7 +81,10 @@ $(document).ready( function() {
                         var person = attendee.attendee;
                         var name = person.first_name + " " + person.last_name;
                         var email = person.email;
-                        var events = member_events[email]; //TODO sort by date?
+                        var events = member_events[email]; //TODO sort by date? Technically, should be sorted on eventbrite side..
+                        if (f !== undefined) {
+                            events = $.grep(events, f);
+                        }
                         var select_html = $("<select></select>");
                         $.each( events, function(index, e) {
                             var option = $("<option>" + e.title + " (" + e.start_date.substr(0,10) + ")</option>");
@@ -96,56 +105,26 @@ $(document).ready( function() {
                     $(".results").show();
                     $(".info").html("").prepend("<p>total registrations: " + attendees.length + "</p>").prepend("first timers: " + newbies);
 
-                    eb_client.event_get({'id': eb_id}, function( response ) {
+                    eb_client.event_get({'id':eid}, function( response ) {
                         $(".info").prepend("<h2>"+response.event.title+" on " + response.event.start_date.substr(0,10) + "</h2>");
                     });
                 });
+
+            };
+
+            $(".event-attendees input[type='submit']").click( function() {
+                var eid = $(".event-attendees input[name='eid']").val();
+                display_event_stats(eid);
             });
 
             $(".dinner-series input[type='submit']").click( function() {
-                $(".info").html("hold up");
-                // Get list of attendees from eventbrite.
-                var eb_id = $(".dinner-series input[name='eb_id']").val();
-                var result_html = $(".results tbody").html("");
-                eb_client.event_list_attendees( {'id': eb_id}, function( response ){
-                    var attendees = response.attendees;
-                    var newbies = 0;
-                    $.each( attendees, function(index, attendee) {
-                        var person = attendee.attendee;
-                        var name = person.first_name + " " + person.last_name;
-                        var email = person.email;
-                        var events = member_events[email]; //TODO sort by date?
-                        var select_html = $("<select></select>");
-                        var count = 0
-                        e = events[0];
-                        
-                        $.each( events, function(index, e) {
-                            if (e.title.indexOf("Dinner Series") > -1) {
-                                var option = $("<option>" + e.title + " (" + e.start_date.substr(0,10) + ")</option>");
-                                if (e.attended === true) {
-                                    option.append(" SHOWED UP");
-                                }
-                                select_html.append(option);
-                                count ++;
-                            }
-                        });
-                         if (events.length == 1) {
-                            newbies++;
-                        }
-                        
-                        var row = $("<tr></tr>").append("<td>"+name+"</td><td>"+count+"</td>").append($("<td></td>").append(select_html));
-                        result_html.append(row);
-     
-                    });
-                    // Display general event info.
-                    $(".results").show();
-                    $(".info").html("").prepend("<p>total registrations: " + attendees.length + "</p>").prepend("first timers: " + newbies);
 
-                    eb_client.event_get({'id': eb_id}, function( response ) {
-                        $(".info").prepend("<h2>"+response.event.title+" on " + response.event.start_date.substr(0,10) + "</h2>");
-                    });
+                f = function(eb_event) {
+                    return eb_event.title.indexOf("Dinner Series") > -1;
+                };
+                var eid = $(".dinner-series input[name='eid']").val();
+                display_event_stats(eid, f)
      
-                });
             });
         });
     });
