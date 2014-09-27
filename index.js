@@ -98,7 +98,12 @@ $(document).ready( function() {
                             newbies++;
                         }
                         
-                        var row = $("<tr></tr>").append("<td>" + name + "</td><td><input class='email' type='text' value='" + email +"'/></td><td>"+events.length+"</td>").append($("<td></td>").append(select_html));
+                        var row = $("<tr></tr>")
+                            .append("<td>" + name + "</td>")
+                            .append("<td><input class='email' readonly='readonly' type='text' value='" + email +"'/></td>")
+                            .append("<td>"+events.length+"</td>")
+                            .append($("<td></td>")
+                            .append(select_html));
                         result_html.append(row);
                     });
                     // Display general event info.
@@ -130,7 +135,6 @@ $(document).ready( function() {
         });
     });
 });
-
 $(document).delegate( ".email", "click", function() {
     $(this).select();
 });
