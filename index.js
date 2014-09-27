@@ -98,7 +98,7 @@ $(document).ready( function() {
                             newbies++;
                         }
                         
-                        var row = $("<tr></tr>").append("<td>"+name+"</td><td>"+events.length+"</td>").append($("<td></td>").append(select_html));
+                        var row = $("<tr></tr>").append("<td>" + name + "</td><td><input class='email' type='text' value='" + email +"'/></td><td>"+events.length+"</td>").append($("<td></td>").append(select_html));
                         result_html.append(row);
                     });
                     // Display general event info.
@@ -126,6 +126,11 @@ $(document).ready( function() {
                 display_event_stats(eid, f)
      
             });
+
         });
     });
+});
+
+$(document).delegate( ".email", "click", function() {
+    $(this).select();
 });
