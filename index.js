@@ -70,7 +70,7 @@ $(document).ready( function() {
             // param eid: eventbrite id
             // param f: filter function
             var display_event_stats = function(eid, f) {
-                $(".info").html("hold up");
+                $(".info").html("patience yo");
                 // Get list of attendees from eventbrite.
                 var result_html = $(".results tbody").html("");
                 eb_client.event_list_attendees({'id': eid}, function( response ){
@@ -100,7 +100,7 @@ $(document).ready( function() {
                         
                         var row = $("<tr></tr>")
                             .append("<td>" + name + "</td>")
-                            .append("<td><input class='email' readonly='readonly' type='text' value='" + email +"'/></td>")
+                            .append("<td><input size='30' class='email' readonly='readonly' type='text' value='" + email +"'/></td>")
                             .append("<td>"+events.length+"</td>")
                             .append($("<td></td>")
                             .append(select_html));
