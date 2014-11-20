@@ -80,14 +80,11 @@ $(document).ready( function() {
                     $.each( attendees, function(index, attendee) {
                         var person = attendee.attendee;
                         var name = person.first_name + " " + person.last_name;
-                        console.log("vjw name: " + name);
                         var email = person.email;
-                        console.log("vjw member events " + JSON.stringify(member_events));
                         var events = member_events[email]; //TODO sort by date? Technically, should be sorted on eventbrite side..
                         if (f !== undefined) {
                             events = $.grep(events, f);
                         }
-                        console.log("vjw events: " + JSON.stringify(events));
                         var select_html = $("<select></select>");
                         $.each( events, function(index, e) {
                             var option = $("<option>" + e.title + " (" + e.start_date.substr(0,10) + ")</option>");
