@@ -82,6 +82,7 @@ $(document).ready( function() {
                         var name = person.first_name + " " + person.last_name;
                         console.log("vjw name: " + name);
                         var email = person.email;
+                        console.log("vjw member events " + JSON.stringify(member_events));
                         var events = member_events[email]; //TODO sort by date? Technically, should be sorted on eventbrite side..
                         if (f !== undefined) {
                             events = $.grep(events, f);
